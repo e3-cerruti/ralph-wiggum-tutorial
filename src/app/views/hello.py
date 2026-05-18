@@ -10,11 +10,12 @@ from ..controllers import HelloController
 from ..schemas import HelloCreate, HelloResponse
 
 hello_bp = Blueprint('hello', __name__)
+hello_api_bp = Blueprint('hello_api', __name__)
 
 
 @hello_bp.route('/')
 def index():  # type: ignore[no-untyped-def]
-    """Render the main page with React island mount point.
+    """Render the hello page with React island mount point.
 
     Serves HTML that includes a [data-island="hello"] element
     which the frontend JavaScript will hydrate with React.
@@ -24,7 +25,7 @@ def index():  # type: ignore[no-untyped-def]
     return render_template('hello/index.html', hellos=hellos_data)
 
 
-@hello_bp.route('/api/hello', methods=['GET'])
+@hello_api_bp.route('/api/hello', methods=['GET'])
 def api_list():  # type: ignore[no-untyped-def]
     """Get all Hello records as JSON.
 
@@ -35,7 +36,7 @@ def api_list():  # type: ignore[no-untyped-def]
     return jsonify([HelloResponse.model_validate(h).model_dump() for h in hellos])
 
 
-@hello_bp.route('/api/hello', methods=['POST'])
+@hello_api_bp.route('/api/hello', methods=['POST'])
 def api_create():  # type: ignore[no-untyped-def]
     """Create a new Hello record.
 
@@ -55,7 +56,7 @@ def api_create():  # type: ignore[no-untyped-def]
     return jsonify(HelloResponse.model_validate(hello).model_dump()), 201
 
 
-@hello_bp.route('/api/hello/<int:hello_id>', methods=['GET'])
+@hello_api_bp.route('/api/hello/<int:hello_id>', methods=['GET'])
 def api_get(hello_id: int):  # type: ignore[no-untyped-def]
     """Get a single Hello record by ID.
 
@@ -72,7 +73,7 @@ def api_get(hello_id: int):  # type: ignore[no-untyped-def]
     return jsonify(HelloResponse.model_validate(hello).model_dump())
 
 
-@hello_bp.route('/api/hello/<int:hello_id>', methods=['DELETE'])
+@hello_api_bp.route('/api/hello/<int:hello_id>', methods=['DELETE'])
 def api_delete(hello_id: int):  # type: ignore[no-untyped-def]
     """Delete a Hello record by ID.
 

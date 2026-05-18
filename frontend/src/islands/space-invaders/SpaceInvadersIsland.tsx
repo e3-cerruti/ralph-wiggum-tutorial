@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 type GameStatus = 'idle' | 'running' | 'paused' | 'won' | 'lost'
 
-interface Enemy {
+export interface Enemy {
   id: number
   x: number
   y: number
@@ -15,7 +15,7 @@ interface Bullet {
   y: number
 }
 
-interface ShieldBlock {
+export interface ShieldBlock {
   id: number
   x: number
   y: number
@@ -100,7 +100,15 @@ function aabb(
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by
 }
 
-export function SpaceInvadersIsland() {
+export function SpaceInvadersIsland({
+  initialEnemies,
+  initialShields,
+  initialLives = 3,
+}: {
+  initialEnemies?: Enemy[]
+  initialShields?: ShieldBlock[]
+  initialLives?: number
+} = {}) {
   const [status, setStatus] = useState<GameStatus>('idle')
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState<number>(() => {
@@ -110,12 +118,12 @@ export function SpaceInvadersIsland() {
       return 0
     }
   })
-  const [lives, setLives] = useState(3)
+  const [lives, setLives] = useState(initialLives)
   const [playerX, setPlayerX] = useState((GAME_WIDTH - PLAYER_WIDTH) / 2)
-  const [enemies, setEnemies] = useState<Enemy[]>(() => buildEnemies())
+  const [enemies, setEnemies] = useState<Enemy[]>(() => initialEnemies ?? buildEnemies())
   const [bullets, setBullets] = useState<Bullet[]>([])
   const [enemyBullets, setEnemyBullets] = useState<Bullet[]>([])
-  const [shields, setShields] = useState<ShieldBlock[]>(() => buildShields())
+  const [shields, setShields] = useState<ShieldBlock[]>(() => initialShields ?? buildShields())
   const [moveDirection, setMoveDirection] = useState<-1 | 0 | 1>(0)
   const [enemyDirection, setEnemyDirection] = useState<-1 | 1>(1)
 

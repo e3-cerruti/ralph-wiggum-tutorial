@@ -23,7 +23,7 @@ class TestHelloPage:
         """GET / should return HTML page."""
         response = client.get('/')
         assert response.status_code == 200
-        assert b'Hello World' in response.data
+        assert b'Space Invaders' in response.data
 
     def test_index_contains_island_mount(self, client: Client) -> None:
         """Index page should contain React island mount point."""

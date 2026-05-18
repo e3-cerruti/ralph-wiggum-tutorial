@@ -12,6 +12,9 @@ def register_blueprints(app: Flask) -> None:
     Args:
         app: Flask application instance
     """
-    from .hello import hello_bp
+    from .space_invaders import space_invaders_bp
+    from .hello import hello_bp, hello_api_bp
 
-    app.register_blueprint(hello_bp)
+    app.register_blueprint(space_invaders_bp)
+    app.register_blueprint(hello_bp, url_prefix='/hello')
+    app.register_blueprint(hello_api_bp)

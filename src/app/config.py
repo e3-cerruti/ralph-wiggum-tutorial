@@ -10,6 +10,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+def _vite_dev_server_url(port: int = 5173) -> str:
+    """Return the Vite dev server URL.
+
+    In GitHub Codespaces, return a placeholder that will be replaced per-request
+    based on how the user accessed Flask. This way localhost and forwarded URLs
+    both work correctly.
+
+    Returns a placeholder that the template context will replace with the
+    actual URL computed from the request.
+    """
+    return os.environ.get('VITE_DEV_SERVER', '__VITE_DEV_SERVER_URL__')
+
+
 class Config:
     """Base configuration with shared settings."""
 
@@ -17,7 +30,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Vite dev server URL for template asset loading
-    VITE_DEV_SERVER = os.environ.get('VITE_DEV_SERVER', 'http://localhost:5173')
+    VITE_DEV_SERVER = _vite_dev_server_url()
 
 
 class DevelopmentConfig(Config):

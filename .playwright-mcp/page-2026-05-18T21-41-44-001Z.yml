@@ -1,0 +1,9 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - heading "Space Invaders" [level=1] [ref=e5]
+    - generic [ref=e9]:
+      - heading "Hello" [level=2] [ref=e10]
+      - generic [ref=e15]:
+        - heading "Messages (Server Rendered)" [level=3] [ref=e16]
+        - list [ref=e17]:
+          - listitem [ref=e18]: Test greeting 2026-05-18T21:32
