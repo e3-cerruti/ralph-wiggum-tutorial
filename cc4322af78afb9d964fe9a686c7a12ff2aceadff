@@ -1,0 +1,22 @@
+Complete Space Invaders implementation:
+
+Features implemented in SpaceInvadersIsland.tsx (~590 lines):
+1. Enemy.row field + buildEnemies() assigns row 0-3
+2. Row-based scoring: ROW_SCORE = [40, 30, 20, 10]
+3. Speed scaling: tickCount % max(1, floor(enemies.length/4)) === 0
+4. Life-lost reset centralized: resets playerX, enemyDirection, enemies, bullets, enemyBullets, tickCount
+5. Enemy bullets: state + ENEMY_FIRE_CHANCE=0.015, MAX_ENEMY_BULLETS=3, ENEMY_BULLET_STEP=7
+6. Shields: ShieldBlock interface, 4x(5x3 blocks), teal bg, AABB vs both bullet types
+7. High score: localStorage 'si_high_score', displayed as 'High: N'
+
+Architecture notes:
+- playerXRef, shieldsRef, enemiesRef prevent stale closures in setInterval
+- All life-loss cases use same code path
+- Shield collision runs each tick inside the setInterval
+
+Test file: 29 tests (was 3)
+- vi.useFakeTimers() for tick mechanics
+- vi.spyOn(Math, 'random') for enemy firing
+- localStorage mock per test
+
+E2E: e2e/space-invaders.spec.ts - 6 smoke tests
