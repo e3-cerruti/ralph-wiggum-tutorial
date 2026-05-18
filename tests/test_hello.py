@@ -6,11 +6,14 @@ Ensures the MVC pattern works correctly end-to-end.
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from flask.testing import FlaskClient
 
-Client = FlaskClient[Any]
+if TYPE_CHECKING:
+    Client = FlaskClient[Any]
+else:
+    Client = FlaskClient
 
 
 class TestHelloPage:
