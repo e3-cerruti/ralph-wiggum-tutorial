@@ -22,6 +22,18 @@ test.describe('Hello Page', () => {
 
     const addButton = page.getByRole('button', { name: /add/i });
     await expect(addButton).toBeVisible();
+
+    await expect(page.getByRole('heading', { name: /space invaders/i })).toBeVisible();
+  });
+
+  test('can start and pause space invaders', async ({ page }) => {
+    await page.goto('/');
+
+    await page.getByRole('button', { name: /^start$/i }).click();
+    await expect(page.getByText('Running')).toBeVisible();
+
+    await page.getByRole('button', { name: /^pause$/i }).click();
+    await expect(page.getByText('Paused')).toBeVisible();
   });
 
   test('can add a greeting', async ({ page }) => {
